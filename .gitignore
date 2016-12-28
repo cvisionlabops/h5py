@@ -21,3 +21,4 @@ MANIFEST
 /h5py.egg-info
 /*.egg
 .eggs/
+windows/hdf5*.zip

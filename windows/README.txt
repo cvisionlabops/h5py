@@ -1,23 +1,53 @@
-Build instructions for h5py on Windows:
+HDF5 version 1.8.13
+------------------------------------------------------------------------------
 
-Build h5py in the normal fashion, except you are required to provide
-both the --hdf5 and --hdf5-version arguments to setup.py.
+This directory contains the binary (release) distribution of 
+HDF5 1.8 that was compiled on;
+    Windows 8 , using VISUAL STUDIO . 
 
-Build HDF5 for distribution with a single command, using the pavement
-file in this directory.  You will need to install paver first.
+It was built with the following options: 
+    -- SHARED C/C++/Fortran libraries
+    -- SZIP (encoder enabled) and ZLIB
+    -- SHARED HDF5 tools
 
-CMake 2.8 (NOT 3.0 or higher), and a SVN client, must be installed and
-on the path.
+The contents of this directory are:
 
-To build HDF5 with Visual Studio 2008 (required for Python 2.6, 2.7 and 3.2):
+    COPYING                 - Copyright notice
+    README.txt              - This file
+    HDF5-1.8.13-win32.exe    - HDF5 Install Package
 
-  paver build_2008
-  
-To build with Visual Studio 2010 (required for Python 3.3):
+Installation
+===========================================================================
+1. Execute HDF5-1.8.13-win32.exe
+2. Follow prompts
+===========================================================================
 
-  paver build_2010
-  
-These commands will each produce a zip file containing the appropriate
-build of HDF5.  Unpack them and supply the appropriate directory to --hdf5.
+After Installation
+===========================================================================
+The compressed examples file HDF5Examples-0.1.1-Source.zip, located in the 
+HDF5 install folder, can be built and tested with CMake and the supplied
+HDF518_Examples.cmake file. The HDF518_Examples.cmake expects HDF5 to have
+been installed in the default location with above compilers.
 
-Check pavement.py for the current HDF5 version to pass to --hdf5-version.
+To test the installation with the examples;
+    Create a directory to run the examples.
+    Copy HDF5Examples-0.1.1-Source.zip to this directory, do NOT unzip.
+    Copy HDF518_Examples.cmake to this directory.
+    Edit HDF518_Examples.cmake line 8 to set INSTALLDIR to where HDF5 is installed.
+    Execute from this directory: 
+        ctest -S HDF518_Examples.cmake,HDF5Examples-0.1.1-Source -C Release -O test.log
+
+When executed, the ctest script will save the results to the log file, test.log, as
+indicated by the ctest command. If you wish the to see more build and test information, 
+add "-VV" to the ctest command.
+
+For more information see USING_CMake_Examples.txt in the install folder. 
+===========================================================================
+
+Documentation for this release can be found at the following URL:
+    http://www.hdfgroup.org/HDF5/doc/.
+
+See the HDF5 home page for further details:
+    http://hdfgroup.org/HDF5/
+
+Bugs should be reported to help@hdfgroup.org.

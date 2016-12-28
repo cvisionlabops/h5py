@@ -1,4 +1,4 @@
-import shutil, zipfile, tempfile, glob, urllib
+import shutil, zipfile, tempfile, glob, urllib, ssl
 import os
 import os.path as op
 
@@ -40,7 +40,8 @@ def build(vs_version):
         
     os.chdir(build_dir)
     
-    sh('cmake -C "{}" -G "{}" ..'.format(CACHENAME, vs_name))
+    #sh('cmake -C "{}" -G "{}" ..'.format(CACHENAME, vs_name))
+    sh('cmake -D"CMAKE_MAKE_PROGRAM:PATH=c:\mingw-w64\mingw64\bin\make.exe" -C "{}" -G "{}" ..'.format(CACHENAME, vs_name))
     sh('cmake --build . --config Release', ignore_error=True)
     sh('copy bin\Release\* bin /Y')
     sh('cmake --build . --config Release')
@@ -58,7 +59,10 @@ def build(vs_version):
 def check_zip():
     if not op.exists(ZIPFILE_NAME):
         print "Downloading HDF5 source code..."
-        urllib.urlretrieve(ZIPFILE_URL, ZIPFILE_NAME)
+        #_context = ssl._create_default_https_context()
+        #if skipssl:
+        _context = ssl._create_unverified_context()
+        urllib.urlretrieve(ZIPFILE_URL, ZIPFILE_NAME, context=_context)
     try:
         sh('cmake --version')
     except Exception:
